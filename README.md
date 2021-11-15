@@ -1,10 +1,10 @@
 # GraphQL to REST
-A simple way to convert GraphQL queries to REST.
+A simple way to convert GraphQL queries to REST in order to use any HTTP client for performing a request.
 
 ## Usage
 There are 2 main things for working with `graphql_2_rest` library: `GraphQLQueryModel` and `GraphQLQueryBuilder`.
 
-1. `GraphQLQueryModel` is responsible for putting arguments in GraphQL query. For example, if you have next query:
+1. `GraphQLQueryModel` is responsible for putting arguments in GraphQL query. For example, if you have a query:
 ```dart
 const query = '''query {
   user(first_name: %arg, age: %arg) {
@@ -30,7 +30,7 @@ class UserQueryModel with GraphQLQueryModel {
 ```
 
 2. `GraphQLQueryBuilder` will replace all arguments in the query consistently using `GraphQLQueryModel`. By default, `GraphQLQueryBuilder` has `%arg` mask for arguments, but it can be changed while creating instance of this class.
-Finally you can use any http client for performing a request, but the request should be `POST`:
+Finally you can use any HTTP client for performing a request, but the request should be `POST`:
 ```dart
 final dio = Dio(BaseOptions(baseUrl: 'https://any.endpoint/'));
 const queryBuilder = GraphQLQueryBuilder();
