@@ -1,3 +1,7 @@
+## [1.0.2] - 2021/11/16
+
+* Changed optional positional `mask` parameter to named.
+
 ## [1.0.1] - 2021/11/16
 
 * Documented public API and updated README.

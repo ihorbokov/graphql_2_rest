@@ -29,10 +29,10 @@ class UserQueryModel with GraphQLQueryModel {
 }
 ```
 
-2. `GraphQLQueryBuilder` will replace all arguments in the query consistently using `GraphQLQueryModel`. By default, `GraphQLQueryBuilder` has `%arg` mask for arguments, but it can be changed while creating instance of this class.
-Finally you can use any HTTP client for performing a request, but the request should be `POST`:
+2. `GraphQLQueryBuilder` will replace all arguments in the query consistently using `GraphQLQueryModel`. By default, `GraphQLQueryBuilder` uses `%arg` mask for arguments, but it can be changed while creating instance of this class.
+Finally you can use any HTTP client for performing a request, but the request have to be `POST`:
 ```dart
-final dio = Dio(BaseOptions(baseUrl: 'https://any.endpoint/'));
+final dio = Dio(BaseOptions(baseUrl: 'https://endpoint/'));
 const queryBuilder = GraphQLQueryBuilder();
 dio.post<dynamic>(
   'graphql/',
