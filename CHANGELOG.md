@@ -1,11 +1,15 @@
-## [1.0.2] - 2021/11/16
+# 1.0.3
 
-* Changed optional positional `mask` parameter to named.
+- Updated Library class
 
-## [1.0.1] - 2021/11/16
+# 1.0.2
 
-* Documented public API and updated README.
+- Changed optional positional `mask` parameter to named.
 
-## [1.0.0] - 2021/11/15
+# 1.0.1
 
-* Initial version of the library, which allows to convert GraphQL queries to REST.
+- Documented public API and updated README.
+
+# 1.0.0
+
+- Initial version of the library, which allows to convert GraphQL queries to REST.

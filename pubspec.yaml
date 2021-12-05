@@ -1,6 +1,6 @@
 name: graphql_2_rest
 description: A simple way to convert GraphQL queries to REST in order to use any HTTP client for performing a request.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/phimary/graphql_2_rest
 
 environment:

@@ -1,4 +1,4 @@
-part of graphql_2_rest;
+import 'graphql_query_model.dart';
 
 /// A class that is responsible for building REST queries.
 class GraphQLQueryBuilder {
