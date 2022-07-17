@@ -1,6 +1,10 @@
+# 1.0.4
+
+- Code refactoring.
+
 # 1.0.3
 
-- Updated Library class
+- Updated Library class.
 
 # 1.0.2
 
