@@ -1,3 +1,7 @@
+# 1.0.5
+
+- Removed Flutter dependency.
+
 # 1.0.4
 
 - Code refactoring.
