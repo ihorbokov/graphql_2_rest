@@ -2,9 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:graphql_2_rest/graphql_2_rest.dart';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -15,13 +13,18 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'GraphQL to REST Demo'),
+      home: const MyHomePage(
+        title: 'GraphQL to REST Demo',
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
 
   final String title;
 
@@ -30,7 +33,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String _missionName = '';
+  var _missionName = '';
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +44,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
             const Text(
               'SpaceX mission name:',
             ),
@@ -50,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Text(
               _missionName,
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(
               height: 8.0,
@@ -86,16 +89,16 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     setState(() {
-      _missionName =
-          response.data['data']['launchesPast'][0]['mission_name'] as String;
+      final data = response.data['data'];
+      _missionName = data['launchesPast'][0]['mission_name'] as String;
     });
   }
 }
 
 class LimitQueryModel with GraphQLQueryModel {
-  final int limit;
-
   LimitQueryModel(this.limit);
+
+  final int limit;
 
   @override
   List<String> get arguments => ['$limit'];
