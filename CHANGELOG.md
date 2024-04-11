@@ -1,3 +1,7 @@
+# 1.0.7
+
+- Replaced line breaks and spaces with a single space.
+
 # 1.0.6
 
 - Updated analysis rules and Readme.
