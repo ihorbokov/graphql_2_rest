@@ -16,11 +16,12 @@ class GraphQLQueryBuilder {
       {'query': _interpolate(query, model?.arguments)};
 
   String _interpolate(String query, List<String>? arguments) {
-    if (arguments == null) return query;
     var result = query;
-    for (final argument in arguments) {
-      result = result.replaceFirst(mask, argument);
+    if (arguments != null) {
+      for (final argument in arguments) {
+        result = result.replaceFirst(mask, argument);
+      }
     }
-    return result;
+    return result.replaceAll(RegExp(r'\s+'), ' ').trim();
   }
 }
