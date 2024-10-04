@@ -5,7 +5,7 @@
 <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/license-MIT-purple.svg" alt="License: MIT"></a>
 </p>
 
-A simple way to convert GraphQL queries to REST in order to use any HTTP client for performing a request.
+A lightweight library for converting GraphQL queries into REST format, enabling the use of any HTTP client for executing requests.
 
 ## Usage
 There are 2 main things for working with `graphql_2_rest` library: `GraphQLQueryModel` and `GraphQLQueryBuilder`.

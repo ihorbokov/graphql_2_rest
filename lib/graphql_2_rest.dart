@@ -1,6 +1,6 @@
-/// A simple way to convert GraphQL queries to REST in order to use
-/// any HTTP client for performing a request.
+/// A lightweight library for converting GraphQL queries into REST format,
+/// enabling the use of any HTTP client for executing requests.
 library graphql_2_rest;
 
 export 'src/graphql_query_builder.dart';
-export 'src/graphql_query_model.dart';
+export 'src/graphql_query_input.dart';
