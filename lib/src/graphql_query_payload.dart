@@ -66,7 +66,7 @@
 ///     if (value is Enum) {
 ///       return value.name.toUpperCase();
 ///     }
-///     return null;
+///     return super.encode(value);
 ///   }
 /// }
 /// ```
