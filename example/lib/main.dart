@@ -22,8 +22,8 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({
-    Key? key,
     required this.title,
+    Key? key,
   }) : super(key: key);
 
   final String title;
@@ -39,7 +39,9 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(
+          widget.title,
+        ),
       ),
       body: Center(
         child: Column(
@@ -49,14 +51,14 @@ class _MyHomePageState extends State<MyHomePage> {
               'SpaceX mission name:',
             ),
             const SizedBox(
-              height: 8.0,
+              height: 8,
             ),
             Text(
               _missionName,
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(
-              height: 8.0,
+              height: 8,
             ),
             ElevatedButton(
               onPressed: _getMissionName,
@@ -72,20 +74,23 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _getMissionName() async {
     const query = '''query {
-      launchesPast(limit: %arg) {
+      launchesPast(@limitInput) {
         mission_name
         launch_date_local
-        launch_site {
-          site_name_long
-        }
       }
     }''';
 
-    final dio = Dio(BaseOptions(baseUrl: 'https://api.spacex.land/'));
-    const queryBuilder = GraphQLQueryBuilder();
+    final dio = Dio(
+      BaseOptions(baseUrl: 'https://spacex-production.up.railway.app'),
+    );
+
+    final queryBuilder = GraphQLQueryBuilder(
+      transformer: (query) => query.replaceAll(RegExp(r'\s+'), ' ').trim(),
+    );
+
     final response = await dio.post<dynamic>(
-      'graphql/',
-      data: queryBuilder.build(query, LimitQueryModel(5)),
+      '/',
+      data: queryBuilder.build(query, LaunchesPastPayload(5)),
     );
 
     setState(() {
@@ -95,11 +100,17 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-class LimitQueryModel with GraphQLQueryModel {
-  LimitQueryModel(this.limit);
+class LaunchesPastPayload with GraphQLQueryPayload {
+  LaunchesPastPayload(this.limit);
 
   final int limit;
 
   @override
-  List<String> get arguments => ['$limit'];
+  Map<String, Map<String, dynamic>> get inputs {
+    return {
+      'limitInput': {
+        'limit': limit,
+      },
+    };
+  }
 }
