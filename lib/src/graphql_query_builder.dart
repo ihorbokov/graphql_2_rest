@@ -2,20 +2,20 @@ import 'package:graphql_2_rest/src/graphql_query_payload.dart';
 
 /// A function signature used to transform a GraphQL query string.
 ///
-/// `QueryTransformer` takes a `String` parameter representing the GraphQL query
+/// This function takes a `String` parameter representing the GraphQL query
 /// and returns a `String` that is the transformed version of the query. This
 /// typedef can be used to apply additional transformations or modifications to
 /// a query string before it is sent to a server.
-typedef QueryTransformer = String Function(String query);
+typedef GraphQLQueryTransformer = String Function(String query);
 
 /// A function signature used to encode a value into a specific format for
 /// GraphQL queries.
 ///
-/// `ValueEncoder` takes a `dynamic` value as input and returns an optional
+/// This function takes a `dynamic` value as input and returns an optional
 /// `String` that represents the encoded value. This typedef is typically used
 /// to handle specific value types (e.g., `Enum`, `DateTime`) that need custom
 /// encoding for a GraphQL query.
-typedef ValueEncoder = String? Function(dynamic value);
+typedef GraphQLValueEncoder = String? Function(dynamic value);
 
 /// A utility class for building and formatting REST-compatible queries from
 /// GraphQL queries with dynamic argument and input replacements.
@@ -42,7 +42,7 @@ typedef ValueEncoder = String? Function(dynamic value);
 ///   - Example: In the query, `%userName` will be replaced by the
 ///     corresponding argument value.
 ///
-/// - `QueryTransformer? transformer`
+/// - `GraphQLQueryTransformer? transformer`
 ///   - An optional function that allows for additional transforming of
 ///     the final query string.
 ///   - This can be used to modify the query before it is returned,
@@ -103,7 +103,7 @@ class GraphQLQueryBuilder {
   /// placeholders have been replaced.
   ///
   /// Default value: `null`.
-  final QueryTransformer? transformer;
+  final GraphQLQueryTransformer? transformer;
 
   /// Constructs a REST-compatible query from the provided GraphQL [query] and
   /// an optional [payload].
@@ -153,7 +153,7 @@ class GraphQLQueryBuilder {
   /// Returns the encoded value as a `String`.
   String _encode(
     dynamic value,
-    ValueEncoder encode,
+    GraphQLValueEncoder encode,
   ) {
     final encodedValue = encode(value);
     if (encodedValue != null) {
