@@ -8,12 +8,22 @@
 A lightweight library for converting GraphQL queries into REST format, enabling the use of any HTTP client for executing requests.
 
 ## Usage
-There are 2 main things for working with `graphql_2_rest` library: `GraphQLQueryModel` and `GraphQLQueryBuilder`.
+To work effectively with the `graphql_2_rest` library, you primarily need to use two key components: `GraphQLQueryPayload` and `GraphQLQueryBuilder`.
 
-1. `GraphQLQueryModel` is responsible for putting arguments in GraphQL query. For example, if you have a query:
+1. `GraphQLQueryPayload` is responsible for providing the arguments and input models to be used in a GraphQL query. For example, if you have queries like:
 ```dart
-const query = '''query {
-  user(first_name: %arg, age: %arg) {
+const queryA = '''query {
+  user(age: %age, firstName: %firstName) {
+    first_name
+    last_name
+    site {
+      site_name
+    }
+  }
+}''';
+
+const queryB = '''query {
+  user(@userInput) {
     first_name
     last_name
     site {
@@ -22,32 +32,66 @@ const query = '''query {
   }
 }''';
 ```
-then you need to create next `GraphQLQueryModel`:
+then you need to create the following `GraphQLQueryPayload`s with `arguments` or/and `inputs`:
 ```dart
-class UserQueryModel with GraphQLQueryModel {
-  const UserQueryModel(
+class UserQueryPayloadA with GraphQLQueryPayload {
+  const UserQueryPayloadA(
     this.age,
     this.firstName,
   );
-  
+
   final int age;
   final String firstName;
-  
+
   @override
-  List<String> get arguments => ['"$firstName"', '$age'];
+  Map<String, dynamic> get arguments {
+    return {
+      'age': age,
+      'firstName': firstName,
+    };
+  }
+}
+
+class UserQueryPayloadB with GraphQLQueryPayload {
+  const UserQueryPayloadB(
+    this.age,
+    this.firstName,
+  );
+
+  final int age;
+  final String firstName;
+
+  @override
+  Map<String, Map<String, dynamic>> get inputs {
+    return {
+      'userInput': {
+        'age': age,
+        'firstName': firstName,
+      },
+    };
+  }
 }
 ```
 
-2. `GraphQLQueryBuilder` will replace all arguments consistently in the query using `GraphQLQueryModel`. By default, `GraphQLQueryBuilder` uses `%arg` mask for arguments, but it can be changed while creating instance of this class.
-Finally you can use any HTTP client for performing a request, but the request have to be `POST`:
+2. `GraphQLQueryBuilder` automatically replaces all argument placeholders in the query using values provided by the `GraphQLQueryPayload`. By default, GraphQLQueryBuilder uses the following prefixes:
+- `%` for arguments
+- `@` for input models
+
+These default prefixes can be customized by specifying different values for `argumentPrefix` and `inputPrefix` when creating an instance of the class.
+
+After building the query, you can use any HTTP client to perform the request, but keep in mind that the request must use the `POST` method:
 ```dart
 final dio = Dio(BaseOptions(baseUrl: 'https://endpoint/'));
-const queryBuilder = GraphQLQueryBuilder();
+
+final queryBuilder = GraphQLQueryBuilder(
+  transformer: (query) => query.replaceAll(RegExp(r'\s+'), ' ').trim(),
+);
+
 dio.post<dynamic>(
   'graphql/',
   data: queryBuilder.build(
-    query, 
-    UserQueryModel('John', 27),
+    queryA, //or queryB
+    UserQueryPayloadA(27, 'John'), //or UserQueryPayloadB(27, 'John')
   ),
 );
 ```
