@@ -73,7 +73,7 @@ class UserQueryPayloadB with GraphQLQueryPayload {
 }
 ```
 
-2. `GraphQLQueryBuilder` automatically replaces all argument placeholders in the query using values provided by the `GraphQLQueryPayload`. By default, GraphQLQueryBuilder uses the following prefixes:
+2. `GraphQLQueryBuilder` automatically replaces all argument placeholders in the query using values provided by the `GraphQLQueryPayload`. By default, `GraphQLQueryBuilder` uses the following prefixes:
 - `%` for arguments
 - `@` for input models
 
