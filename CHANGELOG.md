@@ -1,3 +1,7 @@
+# 2.0.0
+
+- Introduced `GraphQLQueryPayload` to replace `GraphQLQueryModel`. The new `GraphQLQueryPayload` provides enhanced functionality by supporting both arguments (argument name - value) and inputs (input name - model in a key-value format). This change enables a more flexible and structured way to define and manage GraphQL query parameters.
+
 # 1.0.7
 
 - Replaced line breaks and spaces with a single space.
